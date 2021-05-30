@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Day Ahead Price Forecasting</title>
+    <!--   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link hreWebMiningHITSimplementationf='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='../css/style.css') }}"> -->
+
+</head>
+
+<body>
+<div class="login">
+    <h1>Day Ahead Price Forecasting</h1>
+
+    <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('upload_graph')}}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <!--    	<input type="text" name="startDate" placeholder="startDate" required="required" />-->
+        <!--        <input type="text" name="endDate" placeholder="endDate" required="required" />-->
+        <!--		<input type="text" name="days to predict" placeholder="days to predict" required="required" /> -->
+        <!--        <label for="architecture-select">Choose an architecture:</label>-->
+        <!--        <select name="models" id="pet-select">-->
+        <!--            <option value="">&#45;&#45;Please choose an option&#45;&#45;</option>-->
+        <!--            <option value="NUL3">Upper-Lower-Normal 3 Models</option>-->
+        <!--            <option value="NUL1">Upper-Lower-Normal 1 Model</option>-->
+        <!--            <option value="BIN1">Spike-Normal 1 Model</option>-->
+        <!--            <option value="DEF">Normal 1 model</option>-->
+        <!--            <option value="DMDNUL1">DMDNUL1</option>-->
+        <!--        </select>-->
+        <button type="submit" class="btn btn-primary btn-block btn-large">Upload graph</button>
+        <br>
+        <!--         <input type="checkbox" name="Model Architecture" />Upper-Lower-Normal 3 Models <br>
+                <input type="checkbox" name="Model Architecture" />Upper-Lower-Normal 1 Model <br>
+                <input type="checkbox" name="Model Architecture" />Normal 1 model -->
+
+    </form>
+    <!--    MAE: {{mae}}-->
+    <!--    MAPE: {{mape}}-->
+    <!--    SMAPE: {{smape}}-->
+    <!--    RMSE: {{rmse}}-->
+    <!--    <br>-->
+    <!--    <img src={{path}} alt="my plot">-->
+
+</div>
+</body>
+</html>

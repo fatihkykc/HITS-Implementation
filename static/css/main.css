@@ -1,0 +1,39 @@
+﻿body {
+    padding-left: 50px;
+    padding: 10px;
+}
+
+h1 {
+    padding: 10px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+table, th, td {
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 5px;
+    padding-inline: 10px;
+    cursor: pointer;
+}
+
+buttonGray {
+    background-color: rgb(56, 56, 56, 0.05);
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-inline: 50px;
+    cursor: pointer;
+}

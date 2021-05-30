@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../static/css/main.css"/>
+    <!--    <link rel="stylesheet" href="../static/css/app.css">-->
+    <title>Web Mining Final Project</title>
+</head>
+
+<body>
+<h1>HITS Algorithm for Directed Graphs</h1>
+<br/>
+
+<section>
+    <table id="table">
+        <tr>
+            <th></th>
+        </tr>
+    </table>
+</section>
+<br/>
+<br/>
+
+<section>
+    <button class="button" style="background-color: green" onclick="newNode()">Add New Node</button>
+    <button class="button"
+            style="border-style: solid; border-width: thin; border-color: green; background-color: white; color: green"
+            onclick="updateHeading()">Update Headings
+    </button>
+    <br>
+    <br>
+
+    <div>
+        <label for="delIndex">Index of the Row: </label>
+        <input type="number" id="delIndex" name="delIndex" value="1">
+        <button class="button" style="background-color: red" onclick="delRow(0)">Delete Row</button>
+    </div>
+    <br>
+    <br>
+
+    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+            onclick="fill('0', false)">Fill Blank Cells with 0
+    </button>
+    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+            onclick="fill('1', false)">Fill Blank Cells with 1
+    </button>
+    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+            onclick="fill('0', true)">Fill All Cells with 0
+    </button>
+    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+            onclick="fill('1', true)">Fill All Cells with 1
+    </button>
+    <br>
+    <br>
+    <br>
+</section>
+<button class="button" style="font-size:large; padding:10px;" onclick="createDict()">Create Graph</button>
+<form action="{{ url_for('create_graph')}}" method="post">
+    <input id='inp' type="text" name="graph" placeholder="startDate" required="required"/>
+    <button type="submit" class="btn btn-primary btn-block btn-large">Predict Day Ahead Prices</button>
+</form>
+<br>
+AUTH SCORES: {{auth_list}}
+HUB SCORES: {{hub_list}}
+<br>
+<p id="demo"></p>
+
+<script src="../static/javascript/main.js"></script>
+<!--<script src="https://d3js.org/d3.v5.min.js"></script>-->
+<!--<script src="../static/javascript/app.js"></script>-->
+</body>
+</html>
