@@ -50,7 +50,15 @@ def create_graph():
         auth_list, hub_list = HITS(mat).run(n_iter=100)
         print(auth_list)
         print(hub_list)
-        return render_template('main.html', auth_list=auth_list, hub_list=hub_list)
+        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list)
+
+    #if request.method == 'POST':
+    #    mat = str(request.data)[2:]
+    #    auth_list, hub_list = HITS(mat).run(n_iter=100)
+    #    print("mat: ", mat)
+    #    print("auth_list: ", auth_list)
+    #    print("hub_list: ", hub_list)
+    #    return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list)
 
 
 # @app.route('/predict', methods=['POST'])

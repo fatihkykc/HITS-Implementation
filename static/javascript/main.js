@@ -68,7 +68,7 @@ function newNode() {
     table.appendChild(node2);
 
     updateHeading()
-    fill("0")
+    fill("0", false)
 }
 
 function fill(val, all) {
@@ -94,8 +94,29 @@ function fill(val, all) {
     }
 }
 
+function delRow() {
+    var index = document.getElementById("delIndex").value;
+
+    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
+    var c = table.rows.length;
+
+    if ((index != 0) && (index < c)) {
+        // delete column
+        var i;
+        for (i = 0; i < c; i++) {
+            var tr = document.getElementsByTagName("tr")[i];
+            tr.deleteCell(i);
+        }
+
+        // delete row
+        table.getElementsByTagName("tr")[index].remove();
+
+        updateHeading();
+        document.getElementsByTagName("tr")[0].getElementsByTagName("th")[0].innerHTML = "";
+    }
+}
+
 function createDict() {
-    // var dict = {};
     var graph = "";
 
     var table = document.getElementById("table").getElementsByTagName('tbody')[0];
@@ -107,11 +128,9 @@ function createDict() {
         var c1 = tr.childElementCount;
 
         var n = tr.childNodes[0].textContent;
-        //dict[n] = [];
         graph += n + ": ";
 
         for (j = 1; j < c1; j++) {
-            //dict[n].push(tr.childNodes[j].textContent);
             m = tr.childNodes[j].textContent
 
             if (j == (c1 - 1)) {
@@ -123,27 +142,63 @@ function createDict() {
 
     }
 
-    //console.log(dict);
-    console.log(graph)
     document.getElementById("inp").value = graph
-    // fetch("create-graph",
-    //     {
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         method: "POST",
-    //         body: graph.toString()
-    //     }).then(function (res) {
-    //     console.log(res)
-    // })
-
-    // var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "create-graph", true);
-    // xhr.setRequestHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-    // xhr.send(graph.toString());
 }
 
-newNode()
-newNode()
-fill("0")
+function fillGraph(index, letter, matrix) {
+    // add headnode to the first row
+    var tr = document.getElementsByTagName("tr")[0];      // Get the first <tr> element in the document
+    var headnode = document.createElement('th');
+    tr.appendChild(headnode);
+
+    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
+
+    // create new row
+    var node = document.createElement('tr');
+    var headnode = document.createElement('th');
+    var att = document.createAttribute("contenteditable");
+    att.value = "true";
+    headnode.setAttributeNode(att);
+    headnode.innerHTML = letter
+
+    node.appendChild(headnode);
+    table.appendChild(node);
+
+    var c = matrix.length;
+    // add all cells to the row
+    var i;
+    for (i = 0; i < c; i++) {
+        var node = document.createElement('td');
+        var att = document.createAttribute("contenteditable");
+        att.value = "true";
+        node.setAttributeNode(att);
+        node.innerHTML = matrix[i].trim();
+
+        var trInner = document.getElementsByTagName("tr")[index];
+        trInner.appendChild(node);
+    }
+
+    updateHeading()
+}
+
+    
+graph_txt = document.getElementById("graph_text").textContent;
+if (graph_txt.length == 0) {
+    newNode()
+    newNode()
+} else {
+    console.log("graph_text value: ", document.getElementById("graph_text").textContent)
+    arr = graph_txt.split("-")
+
+    arr.forEach(function (item, index) {
+        var row = arr[index];
+        if (row.length != 0) {
+            row = row.split(":")
+            letter = row[0]
+            matrix = row[1].split(",")
+
+            fillGraph(index+1, letter, matrix)
+        }
+    })
+}
+
