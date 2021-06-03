@@ -52,8 +52,9 @@ class Graph:
     def get_auth_hub_list(self):
         auth_list = [node.auth for node in self.nodes]
         hub_list = [node.hub for node in self.nodes]
+        name_list = [node.name for node in self.nodes]
 
-        return auth_list, hub_list
+        return auth_list, hub_list, name_list
 
     def normalize(self):
         auths = sum([node.auth for node in self.nodes])

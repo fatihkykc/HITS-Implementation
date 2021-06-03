@@ -26,6 +26,22 @@ const links = [
     {source: nodes[1], target: nodes[2], left: false, right: true}
 ];
 
+// function parseLinks() {
+//     var graph = "";
+//     for (i = 1; i < links.length; i++) {
+//         if (links[i].left===false) {
+//
+//         } else {
+//
+//         }
+//         if (links[i].right===false) {
+//
+//         } else {
+//
+//         }
+//     }
+// }
+
 // init D3 force layout
 const force = d3.forceSimulation()
     .force('link', d3.forceLink().id((d) => d.id).distance(150))

@@ -48,10 +48,10 @@ def create_graph():
         mat = str(params[0])
         temp = int(params[1])
         print(mat)
-        auth_list, hub_list = HITS(mat).run(n_iter=100)
+        auth_list, hub_list, name_list = HITS(mat).run(n_iter=100)
         print(auth_list)
         print(hub_list)
-        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, temp=temp)
+        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list, temp=temp)
 
     #if request.method == 'POST':
     #    mat = str(request.data)[2:]
