@@ -1,4 +1,4 @@
-import re
+import re, json
 
 import numpy as np
 
@@ -88,6 +88,18 @@ def init_graph2(graphstr):
         for j in range(len(lines[i][3:].strip().split(','))):
             if int(lines[i][3:].strip().split(',')[j]) == 1:
                 graph.add_relation(parent_list[i], parent_list[j])
+    graph.display()
+    return graph
+
+
+def init_graph3(graphstr):
+    graph = Graph()
+    dct = json.loads(graphstr)
+    for source in dct:
+        for target in dct[source]:
+            if dct[source][target] == 1:
+                print(source, target)
+                graph.add_relation(source, target)
     graph.display()
     return graph
 # graph = init_graph('g1.txt')

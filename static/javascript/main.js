@@ -118,7 +118,7 @@ function delRow() {
 
         updateHeading();
         document.getElementsByTagName("tr")[0].getElementsByTagName("th")[0].innerHTML = "";
-    }    
+    }
 }
 
 function createDict() {
@@ -229,7 +229,7 @@ function fillScoreTable(index, letter, score, table_id) {
         table.appendChild(node);
     }
 }
-    
+
 graph_txt = document.getElementById("graph_text").textContent;
 if (graph_txt.length == 0) {
     newNode();

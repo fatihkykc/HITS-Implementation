@@ -1,9 +1,16 @@
-from graph import init_graph2
+from graph import init_graph2, init_graph3
 
 
 class HITS:
     def __init__(self, fname):
-        self.graph = init_graph2(fname)
+        self.string = fname
+
+    def parse_str(self):
+        self.graph = init_graph2(self.string)
+        self.node_list = self.graph.nodes
+
+    def parse_json(self):
+        self.graph = init_graph3(self.string)
         self.node_list = self.graph.nodes
 
     def run(self, n_iter):

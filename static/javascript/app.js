@@ -2,7 +2,7 @@
 const width = 960;
 const height = 500;
 const colors = d3.scaleOrdinal(d3.schemeCategory10);
-
+const graphdict = {}
 const svg = d3.select('body')
     .append('svg')
     .on('contextmenu', () => {
@@ -16,31 +16,63 @@ const svg = d3.select('body')
 //  - reflexive edges are indicated on the node (as a bold black circle).
 //  - links are always source < target; edge directions are set by 'left' and 'right'.
 const nodes = [
-    {id: 0, reflexive: false},
-    {id: 1, reflexive: true},
-    {id: 2, reflexive: false}
+    // {id: 0, reflexive: false},
+    // {id: 1, reflexive: true},
+    // {id: 2, reflexive: false}
 ];
-let lastNodeId = 2;
+let lastNodeId = -1;
 const links = [
-    {source: nodes[0], target: nodes[1], left: false, right: true},
-    {source: nodes[1], target: nodes[2], left: false, right: true}
+    // {source: nodes[0], target: nodes[1], left: false, right: true},
+    // {source: nodes[1], target: nodes[2], left: false, right: true}
 ];
+var temp_str = document.getElementById("temp").textContent;
+if (temp_str.length === 0) {
+    var temp = 0;
+} else {
+    var temp = parseInt(temp_str);
+}
 
-// function parseLinks() {
-//     var graph = "";
-//     for (i = 1; i < links.length; i++) {
-//         if (links[i].left===false) {
-//
-//         } else {
-//
-//         }
-//         if (links[i].right===false) {
-//
-//         } else {
-//
-//         }
-//     }
-// }
+function parseLinks() {
+    // var graphdict = {}
+    console.log("parseLinks called")
+    for (i = 0; i < links.length; i++) {
+        // graph += links[i].source + ": ";
+        if (links[i].left === false) {
+            if (graphdict[links[i].source.id]) {
+                graphdict[links[i].source.id][links[i].target.id] = 0
+            } else {
+                graphdict[links[i].source.id] = {}
+                graphdict[links[i].source.id][links[i].target.id] = 0
+            }
+
+        } else if (links[i].left === true) {
+            if (graphdict[links[i].target.id]) {
+                graphdict[links[i].target.id][links[i].source.id] = 1
+            } else {
+                graphdict[links[i].target.id] = {}
+                graphdict[links[i].target.id][links[i].source.id] = 1
+            }
+        }
+        if (links[i].right === false) {
+            if (graphdict[links[i].source.id]) {
+                graphdict[links[i].source.id][links[i].target.id] = 0
+            } else {
+                graphdict[links[i].source.id] = {}
+                graphdict[links[i].source.id][links[i].target.id] = 0
+            }
+        } else if (links[i].right === true) {
+            if (graphdict[links[i].source.id]) {
+                graphdict[links[i].source.id][links[i].target.id] = 1
+            } else {
+                graphdict[links[i].source.id] = {}
+                graphdict[links[i].source.id][links[i].target.id] = 1
+            }
+        }
+    }
+    document.getElementById("graphanim").value = JSON.stringify(graphdict)
+    document.getElementById("tempanim").value = temp
+    // return JSON.stringify(graphdict)
+}
 
 // init D3 force layout
 const force = d3.forceSimulation()
@@ -297,7 +329,6 @@ function mouseup() {
             .classed('hidden', true)
             .style('marker-end', '');
     }
-    console.log(links)
     // because :active only works in WebKit?
     svg.classed('active', false);
 

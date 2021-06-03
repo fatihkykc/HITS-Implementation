@@ -48,45 +48,31 @@ def create_graph():
         mat = str(params[0])
         temp = int(params[1])
         print(mat)
-        auth_list, hub_list, name_list = HITS(mat).run(n_iter=100)
+        hits = HITS(mat)
+        hits.parse_str()
+        auth_list, hub_list, name_list = hits.run(n_iter=100)
         print(auth_list)
         print(hub_list)
-        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list, temp=temp)
-
-    #if request.method == 'POST':
-    #    mat = str(request.data)[2:]
-    #    auth_list, hub_list = HITS(mat).run(n_iter=100)
-    #    print("mat: ", mat)
-    #    print("auth_list: ", auth_list)
-    #    print("hub_list: ", hub_list)
-    #    return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list)
+        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list,
+                               temp=temp)
 
 
-# @app.route('/predict', methods=['POST'])
-# def predict():
-#     params = [x for x in request.form.values()]
-#     startDate = params[0]
-#     endDate = params[1]
-#     days = params[2]
-#     arc = params[3]
-#     print(startDate, endDate, days, arc)
-#     if arc == "DEF":
-#         predictions, plotpath, truth = LGBRegression.start(startDate, endDate, days, plot=True)
-#     elif arc == "BIN1":
-#         predictions, truth, plotpath, predictions_clf = RunIterNUL.run_binary_1_iter(startDate, endDate, days)
-#     elif arc == "NUL1":
-#         predictions, truth, plotpath, predictions_clf = RunIterNUL.run_nul_1_iter(startDate, endDate, days)
-#     elif arc == "NUL3":
-#         predictions, truth, plotpath, predictions_clf = RunIterNUL.run_nul_3_iter(startDate, endDate, days)
-#         predictions = np.array(predictions["preds"].to_list())
-#     elif arc == "DMDNUL1":
-#         predictions, truth, plotpath, predictions_clf = RunIterNUL.run_dimdik(startDate, endDate, days)
-#
-#     # mean_absolute_percentage_error(truth, predictions)
-#     return render_template('index.html', path=plotpath, mae=mean_absolute_error(truth, predictions),
-#                            mape=mean_absolute_percentage_error(truth, predictions),
-#                            rmse=mean_squared_error(truth, predictions, squared=False), smape=smape(truth,
-#                                                                                                    predictions))
+@app.route('/create-graph-anim', methods=['POST'])
+@cross_origin(origin='*')
+def create_graph_anim():
+    if request.method == 'POST':
+        params = [x for x in request.form.values()]
+        print(params)
+        mat = str(params[0])
+        temp = int(params[1])
+        print(mat)
+        hits = HITS(mat)
+        hits.parse_json()
+        auth_list, hub_list, name_list = hits.run(n_iter=100)
+        print(auth_list)
+        print(hub_list)
+        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list,
+                               temp=temp)
 
 
 # No caching at all for API endpoints.
