@@ -1,8 +1,13 @@
 // JavaScript source code
 
 a = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-var temp = 0;
 
+var temp_str = document.getElementById("temp").textContent;
+if (temp_str.length == 0) {
+    var temp = 0;
+} else {
+    var temp = parseInt(temp_str);
+}
 
 function updateHeading() {
     var table = document.getElementById("table").getElementsByTagName('tbody')[0];
@@ -67,7 +72,7 @@ function newNode() {
     }
     table.appendChild(node2);
 
-    updateHeading()
+    updateHeading("table")
     fill("0", false)
 }
 
@@ -113,7 +118,7 @@ function delRow() {
 
         updateHeading();
         document.getElementsByTagName("tr")[0].getElementsByTagName("th")[0].innerHTML = "";
-    }
+    }    
 }
 
 function createDict() {
@@ -127,11 +132,17 @@ function createDict() {
         var tr = table.getElementsByTagName("tr")[i];
         var c1 = tr.childElementCount;
 
+        // letter
         var n = tr.childNodes[0].textContent;
         graph += n + ": ";
 
         for (j = 1; j < c1; j++) {
-            m = tr.childNodes[j].textContent
+            // must be 0 or 1
+            m = tr.childNodes[j].textContent.trim();
+
+            if ((m != "0") && (m != "1")) {
+                m = "0";
+            }
 
             if (j == (c1 - 1)) {
                 graph += m + "-";
@@ -143,62 +154,112 @@ function createDict() {
     }
 
     document.getElementById("inp").value = graph
+    document.getElementById("inp2").value = temp
 }
 
-function fillGraph(index, letter, matrix) {
+function fillTable(index, letter, matrix) {
+    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
+
     // add headnode to the first row
-    var tr = document.getElementsByTagName("tr")[0];      // Get the first <tr> element in the document
+    var tr = table.getElementsByTagName("tr")[0];      // Get the first <tr> element
     var headnode = document.createElement('th');
     tr.appendChild(headnode);
 
-    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-
     // create new row
     var node = document.createElement('tr');
-    var headnode = document.createElement('th');
+    var headnode2 = document.createElement('th');
+
     var att = document.createAttribute("contenteditable");
     att.value = "true";
-    headnode.setAttributeNode(att);
-    headnode.innerHTML = letter
+    headnode2.setAttributeNode(att);
+    headnode2.innerHTML = letter;
 
-    node.appendChild(headnode);
+    node.appendChild(headnode2);
     table.appendChild(node);
+
+    // matrix = [0, 1, 0, 0, 1]
 
     var c = matrix.length;
     // add all cells to the row
     var i;
     for (i = 0; i < c; i++) {
-        var node = document.createElement('td');
+        var node2 = document.createElement('td');
         var att = document.createAttribute("contenteditable");
         att.value = "true";
-        node.setAttributeNode(att);
-        node.innerHTML = matrix[i].trim();
+        node2.setAttributeNode(att);
+        node2.innerHTML = matrix[i].trim();
 
-        var trInner = document.getElementsByTagName("tr")[index];
-        trInner.appendChild(node);
+        var trInner = table.getElementsByTagName("tr")[index];
+        trInner.appendChild(node2);
     }
 
     updateHeading()
 }
 
+function fillScoreTable(index, letter, score, table_id) {
+    if (index == 0) {
+        var table = document.getElementById(table_id);
+        var node = document.createElement('tr');
+
+        var blank = document.createElement('td');
+        blank.innerHTML = "";
+        blank.style.backgroundColor = "black";
+
+        node.appendChild(blank);
+    } else {
+        var node = document.getElementById(table_id).getElementsByTagName("tr")[0];
+    }
+
+    var headnode = document.createElement('th');
+    headnode.innerHTML = letter;
+    node.appendChild(headnode);
+
+    var scorenode = document.createElement('td');
+    scorenode.innerHTML = parseFloat(score).toFixed(2);
+    node.appendChild(scorenode);
+
+    var blank = document.createElement('td');
+    blank.innerHTML = "";
+    blank.style.backgroundColor = "black";
+
+    node.appendChild(blank);
+
+    if (index == 0) {
+        var table = document.getElementById(table_id);
+        table.appendChild(node);
+    }
+}
     
 graph_txt = document.getElementById("graph_text").textContent;
 if (graph_txt.length == 0) {
-    newNode()
-    newNode()
+    newNode();
+    newNode();
 } else {
-    console.log("graph_text value: ", document.getElementById("graph_text").textContent)
-    arr = graph_txt.split("-")
+    arr = graph_txt.split("-");
 
     arr.forEach(function (item, index) {
         var row = arr[index];
         if (row.length != 0) {
-            row = row.split(":")
-            letter = row[0]
-            matrix = row[1].split(",")
+            row = row.split(":");
+            letter = row[0];
+            matrix = row[1].split(",");
 
-            fillGraph(index+1, letter, matrix)
+            fillTable(index + 1, letter, matrix, "table");
+
+            auth_scores = document.getElementById("auth_list").textContent;
+            hub_scores = document.getElementById("hub_list").textContent;
+
+            auth_scores = auth_scores.replace("[", "");
+            auth_scores = auth_scores.replace("]", "");
+            auth_scores = auth_scores.split(",");
+
+            hub_scores = hub_scores.replace("[", "");
+            hub_scores = hub_scores.replace("]", "");
+            hub_scores = hub_scores.split(",");
+
+            // matrix = [0.2, 0.2, 0.2, 0.2, 0.2]
+            fillScoreTable(index, letter, auth_scores[index], "auth_table");
+            fillScoreTable(index, letter, hub_scores[index], "hub_table");
         }
     })
 }
-
