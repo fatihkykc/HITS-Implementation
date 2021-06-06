@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../static/css/main.css"/>
+    <link rel="stylesheet" href="../static/css/app.css">
+    <title>Web Mining Final Project</title>
+</head>
+
+<body>
+<h1>HITS Algorithm for Directed Graphs</h1>
+<div class="row">
+        <a class="col" style="background-color: green; color: white" href="{{ url_for('matrix')}}">Matrix</a>
+        <a class="col" href="{{ url_for('graph')}}">Graph</a>
+    </div>
+    <br />
+
+    <ul>
+        <li>The table below <b>can be edited</b> except for the first row.</li>
+        <li>The first column contains <b>the source nodes</b> and<br />the first row contains the symbols of <b>the target nodes</b>.</li>
+        <li>To show which target node, a source node goes to,
+            <br />it is sufficient to write "<b>1</b>" in the column of the target node in the row of the source node.
+            <br/>All values except "0" and "1" are considered "<b>0</b>".    
+        </li>
+        <li>"<b>Add New Node</b>" button adds a new node to the matrix as both source and target.</li>
+        <li>Target nodes must be in the same order as source nodes. For this, at the end of the arrangement of the source nodes,
+            <br />it can be updated before the calculation of the scores by using the "<b>Update Headings</b>" button,<br />
+            or <b>it will be updated</b> before the action is taken when the "Create Graph" button is clicked.</li>
+        <li>"<b>Delete Row</b>" button removes the node with the row index from the graph.</li>
+        <li>"<b>Fill Blank Cells with 0/1</b>" buttons give values 0/1 to empty cells.</li>
+        <li>"<b>Fill All Cells with 0/1</b>" buttons give values 0/1 to all cells.</li>
+        <li>"<b>Reset All</b>" button deletes all nodes.</li>
+        <li>"<b>Create Graph</b>" button calculate and show the scores.</li>
+    </ul>
+
+    <br />
+    <a id="graph_text" style="display: none">{{mat}}</a>
+    <a id="temp" style="display: none">{{tempLetter}}</a>
+    <section>
+        <table id="table">
+            <tr>
+                <th></th>
+            </tr>
+        </table>
+    </section>
+    <br/>
+    <br/>
+
+    <section>
+        <button class="button" style="background-color: green" onclick="newNode()">Add New Node</button>
+        <button class="button" style="border-style: solid; border-width: thin; border-color: green; background-color: white; color: green" onclick="updateHeading()">
+            Update Headings
+        </button>
+        <br>
+        <br>
+
+        <div>
+            <label for="delIndex">Index of the Row: </label>
+            <input type="number" id="delIndex" name="delIndex" value="1">
+            <button class="button" style="background-color: red" onclick="delRow(0)">Delete Node</button>
+        </div>
+        <br>
+        <br>
+
+        <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+                onclick="fill('0', false)">
+            Fill Blank Cells with 0
+        </button>
+        <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+                onclick="fill('1', false)">
+            Fill Blank Cells with 1
+        </button>
+        <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+                onclick="fill('0', true)">
+            Fill All Cells with 0
+        </button>
+        <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
+                onclick="fill('1', true)">
+            Fill All Cells with 1
+        </button>
+        <br>
+        <br>
+        <button class="button" style="background-color: red"
+                onclick="reset()">
+            Reset All
+        </button>
+        <br>
+
+        <div style="display: none">
+            AUTH SCORES: <a id="auth_list">{{auth_list}}</a>
+            HUB SCORES: <a id="hub_list">{{hub_list}}</a>
+            NAME LIST: <a id="name_list">{{name_list}}</a>
+        </div>
+
+        <form action="{{ url_for('create_graph')}}" method="post">
+            <input id='inp' type="text" name="graph" placeholder="graph" required="required" style="display: none" />
+            <input id='inp2' type="text" name="tempLetter" placeholder="tempLetter" required="required" style="display: none" />
+            <br />
+            <button type="submit" class="button" style="font-size:large; padding:10px;" onclick="createDict()">
+                Create Graph
+            </button>
+        </form>
+        <br>
+        <br>
+
+        <div id="scores" style="display: none">
+            <b>AUTH SCORES</b>
+            <table id="auth_table">
+            </table>
+            <br />
+            <b>HUB SCORES</b>
+            <table id="hub_table">
+            </table>
+        </div>
+        <br>
+        <br>
+
+    </section>
+
+    <script src="../static/javascript/main2.js"></script>
+</body>
+</html>

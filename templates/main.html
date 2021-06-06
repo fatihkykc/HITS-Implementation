@@ -1,104 +1,39 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="../static/css/main.css"/>
-    <link rel="stylesheet" href="../static/css/app.css">
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../static/css/main.css" />
     <title>Web Mining Final Project</title>
 </head>
 
 <body>
-<h1>HITS Algorithm for Directed Graphs</h1>
-<br/>
+    <h1>HITS Algorithm for Directed Graphs</h1>
 
-<a id="graph_text" style="display: none">{{mat}}</a>
-<a id="temp" style="display: none">{{temp}}</a>
-<section>
-    <table id="table">
-        <tr>
-            <th></th>
-        </tr>
-    </table>
-</section>
-<br/>
-<br/>
+    <section class="section">
+        <div>The <b>authorities</b> and <b>hubs</b> scores of the directed graph by <b>HITS algorithm</b> can be found with using these methods:</div>
+        <br />
+        <br />
+        <div class="row">
+            <a class="col" href="{{ url_for('matrix')}}">Matrix</a>
+            <br />
+            <br />
+            <img src="../static/images/matrix.png"/>
+            <img src="../static/images/matrix_scores.png"/>
 
-<section>
-    <button class="button" style="background-color: green" onclick="newNode()">Add New Node</button>
-    <button class="button"
-            style="border-style: solid; border-width: thin; border-color: green; background-color: white; color: green"
-            onclick="updateHeading()">
-        Update Headings
-    </button>
-    <br>
-    <br>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <a class="col" href="{{ url_for('graph')}}">Graph</a>
+            <br />
+            <br />
+            <img src="../static/images/graph.png"/>
+            <img src="../static/images/graph_scores.png"/>
 
-    <div>
-        <label for="delIndex">Index of the Row: </label>
-        <input type="number" id="delIndex" name="delIndex" value="1">
-        <button class="button" style="background-color: red" onclick="delRow(0)">Delete Row</button>
-    </div>
-    <br>
-    <br>
-
-    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
-            onclick="fill('0', false)">
-        Fill Blank Cells with 0
-    </button>
-    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
-            onclick="fill('1', false)">
-        Fill Blank Cells with 1
-    </button>
-    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
-            onclick="fill('0', true)">
-        Fill All Cells with 0
-    </button>
-    <button class="button" style="background-color: white; color: black; border-style: solid; border-width: thin"
-            onclick="fill('1', true)">
-        Fill All Cells with 1
-    </button>
-    <br>
-    <br>
-</section>
-<form action="{{ url_for('create_graph')}}" method="post">
-    <input id='inp' type="text" name="graph" placeholder="graph" required="required"/>
-    <input id='inp2' type="text" name="temp" placeholder="temp" required="required"/>
-    <br/>
-    <button type="submit" class="button" style="font-size:large; padding:10px;" onclick="createDict()">Create Graph
-    </button>
-</form>
-
-<form action="{{ url_for('create_graph_anim')}}" method="post">
-    <input id='graphanim' type="text" name="graph" placeholder="graph1" required="required"/>
-    <input id='tempanim' type="text" name="temp" placeholder="temp2" required="required"/>
-    <br/>
-    <button type="submit" class="button" style="font-size:large; padding:10px;" onclick="parseLinks()">Create Graph
-        Anim
-    </button>
-</form>
-
-<br>
-
-<div style="display: none">
-    AUTH SCORES: <a id="auth_list">{{auth_list}}</a>
-    HUB SCORES: <a id="hub_list">{{hub_list}}</a>
-</div>
-
-<div>
-    <b>AUTH SCORES</b>
-    <table id="auth_table">
-    </table>
-    <br/>
-    <b>HUB SCORES</b>
-    <table id="hub_table">
-    </table>
-</div>
-
-<br>
-
-<script src="../static/javascript/main.js"></script>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="../static/javascript/app.js"></script>
+        </div>
+    </section>
+    
 </body>
 </html>

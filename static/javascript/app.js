@@ -25,16 +25,10 @@ const links = [
     // {source: nodes[0], target: nodes[1], left: false, right: true},
     // {source: nodes[1], target: nodes[2], left: false, right: true}
 ];
-var temp_str = document.getElementById("temp").textContent;
-if (temp_str.length === 0) {
-    var temp = 0;
-} else {
-    var temp = parseInt(temp_str);
-}
 
 function parseLinks() {
     // var graphdict = {}
-    console.log("parseLinks called")
+    // console.log("parseLinks called")
     for (i = 0; i < links.length; i++) {
         // graph += links[i].source + ": ";
         if (links[i].left === false) {
@@ -70,7 +64,6 @@ function parseLinks() {
         }
     }
     document.getElementById("graphanim").value = JSON.stringify(graphdict)
-    document.getElementById("tempanim").value = temp
     // return JSON.stringify(graphdict)
 }
 

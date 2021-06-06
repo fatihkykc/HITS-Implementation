@@ -22,57 +22,51 @@ def mean_absolute_percentage_error(y_true, y_pred):
     y_true, y_pred = np.array(y_true), np.array(y_pred)
     return np.nanmean(np.abs((y_true - y_pred) / y_true)) * 100
 
-
 @app.route('/')
 def home():
     return render_template('main.html')
 
+@app.route('/matrix')
+def matrix():
+    return render_template('matrix.html')
 
-@app.route('/upload-graph', methods=['POST'])
-def upload_graph():
-    if request.method == 'POST':
-        f = request.files['file']
-        f.save(secure_filename(f.filename))
-    auth_list, hub_list = HITS(f.filename).run(n_iter=100)
-    # res = auth_list + hub_list
-    # print(auth_list)
-    # print(hub_list)
-    return render_template('main.html')
+@app.route('/graph')
+def graph():
+    return render_template('graph.html')
 
 
-@app.route('/create-graph', methods=['POST'])
+@app.route('/matrix', methods=['POST'])
 @cross_origin(origin='*')
 def create_graph():
     if request.method == 'POST':
         params = [x for x in request.form.values()]
         mat = str(params[0])
-        temp = int(params[1])
+        tempLetter = int(params[1])
         print(mat)
         hits = HITS(mat)
         hits.parse_str()
         auth_list, hub_list, name_list = hits.run(n_iter=100)
         print(auth_list)
         print(hub_list)
-        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list,
-                               temp=temp)
+        print("a<",name_list)
+        return render_template('matrix.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list, tempLetter=tempLetter)
 
 
-@app.route('/create-graph-anim', methods=['POST'])
+@app.route('/graph', methods=['POST'])
 @cross_origin(origin='*')
 def create_graph_anim():
     if request.method == 'POST':
         params = [x for x in request.form.values()]
-        print(params)
+        print("params: ", params)
         mat = str(params[0])
-        temp = int(params[1])
-        print(mat)
         hits = HITS(mat)
         hits.parse_json()
         auth_list, hub_list, name_list = hits.run(n_iter=100)
-        print(auth_list)
-        print(hub_list)
-        return render_template('main.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list,
-                               temp=temp)
+        print("mat: ", mat)
+        print("auth_list: ", auth_list)
+        print("hub_list: ", hub_list)
+        print("name_list: ",name_list)
+        return render_template('graph.html', mat=mat, auth_list=auth_list, hub_list=hub_list, name_list=name_list)
 
 
 # No caching at all for API endpoints.

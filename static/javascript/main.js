@@ -1,126 +1,4 @@
 // JavaScript source code
-
-a = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-
-var temp_str = document.getElementById("temp").textContent;
-if (temp_str.length == 0) {
-    var temp = 0;
-} else {
-    var temp = parseInt(temp_str);
-}
-
-function updateHeading() {
-    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-    var c = table.rows.length;
-
-    var tr1 = table.getElementsByTagName("tr")[0];
-
-    var i;
-    for (i = 1; i < c; i++) {
-        var tr = table.getElementsByTagName("tr")[i];
-        var x = tr.childNodes[0].textContent;
-
-        tr1.childNodes[i + 2].innerHTML = x;
-    }
-}
-
-function newNode() {
-    var tr = document.getElementsByTagName("tr")[0];      // Get the first <tr> element in the document
-    var headnode = document.createElement('th');
-    tr.appendChild(headnode);
-
-    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-    var c = table.rows.length;
-
-    // add new cell to end of the all rows
-    var i;
-    for (i = 1; i < c; i++) {
-        var node = document.createElement('td');
-        var att = document.createAttribute("contenteditable");
-        att.value = "true";
-        node.setAttributeNode(att);
-
-        var trInner = document.getElementsByTagName("tr")[i];
-        trInner.appendChild(node);
-    }
-
-    // create new row
-    var node2 = document.createElement('tr');
-
-    var headnode2 = document.createElement('th');
-    var att2 = document.createAttribute("contenteditable");
-    att2.value = "true";
-    headnode2.setAttributeNode(att2);
-
-    var letter = a[temp];
-    headnode2.innerHTML = letter;
-    temp += 1;
-    if (temp == 26) {
-        temp = 0;
-    }
-
-    node2.appendChild(headnode2);
-
-    var x = tr.childElementCount;
-    for (i = 0; i < x - 1; i++) {
-        var innerNode = document.createElement('td');
-        var att2 = document.createAttribute("contenteditable");
-        att2.value = "true";
-        innerNode.setAttributeNode(att2);
-
-        node2.appendChild(innerNode);
-    }
-    table.appendChild(node2);
-
-    updateHeading("table")
-    fill("0", false)
-}
-
-function fill(val, all) {
-    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-    var c = table.rows.length;
-
-    var i;
-    for (i = 1; i < c; i++) {
-        var tr = table.getElementsByTagName("tr")[i];
-        var c1 = tr.childElementCount;
-
-        for (j = 1; j < c1; j++) {
-            if (val == "0") {
-                if ((all) || (tr.childNodes[j].textContent != "1")) {
-                    tr.childNodes[j].innerHTML = "0";
-                }
-            } else {
-                if ((all) || (tr.childNodes[j].textContent != "0")) {
-                    tr.childNodes[j].innerHTML = "1";
-                }
-            }
-        }
-    }
-}
-
-function delRow() {
-    var index = document.getElementById("delIndex").value;
-
-    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-    var c = table.rows.length;
-
-    if ((index != 0) && (index < c)) {
-        // delete column
-        var i;
-        for (i = 0; i < c; i++) {
-            var tr = document.getElementsByTagName("tr")[i];
-            tr.deleteCell(i);
-        }
-
-        // delete row
-        table.getElementsByTagName("tr")[index].remove();
-
-        updateHeading();
-        document.getElementsByTagName("tr")[0].getElementsByTagName("th")[0].innerHTML = "";
-    }
-}
-
 function createDict() {
     var graph = "";
 
@@ -153,47 +31,7 @@ function createDict() {
 
     }
 
-    document.getElementById("inp").value = graph
-    document.getElementById("inp2").value = temp
-}
-
-function fillTable(index, letter, matrix) {
-    var table = document.getElementById("table").getElementsByTagName('tbody')[0];
-
-    // add headnode to the first row
-    var tr = table.getElementsByTagName("tr")[0];      // Get the first <tr> element
-    var headnode = document.createElement('th');
-    tr.appendChild(headnode);
-
-    // create new row
-    var node = document.createElement('tr');
-    var headnode2 = document.createElement('th');
-
-    var att = document.createAttribute("contenteditable");
-    att.value = "true";
-    headnode2.setAttributeNode(att);
-    headnode2.innerHTML = letter;
-
-    node.appendChild(headnode2);
-    table.appendChild(node);
-
-    // matrix = [0, 1, 0, 0, 1]
-
-    var c = matrix.length;
-    // add all cells to the row
-    var i;
-    for (i = 0; i < c; i++) {
-        var node2 = document.createElement('td');
-        var att = document.createAttribute("contenteditable");
-        att.value = "true";
-        node2.setAttributeNode(att);
-        node2.innerHTML = matrix[i].trim();
-
-        var trInner = table.getElementsByTagName("tr")[index];
-        trInner.appendChild(node2);
-    }
-
-    updateHeading()
+    document.getElementById("inp").value = graph;
 }
 
 function fillScoreTable(index, letter, score, table_id) {
@@ -215,7 +53,7 @@ function fillScoreTable(index, letter, score, table_id) {
     node.appendChild(headnode);
 
     var scorenode = document.createElement('td');
-    scorenode.innerHTML = parseFloat(score).toFixed(2);
+    scorenode.innerHTML = parseFloat(score).toFixed(5);
     node.appendChild(scorenode);
 
     var blank = document.createElement('td');
@@ -230,36 +68,35 @@ function fillScoreTable(index, letter, score, table_id) {
     }
 }
 
-graph_txt = document.getElementById("graph_text").textContent;
-if (graph_txt.length == 0) {
-    newNode();
-    newNode();
-} else {
-    arr = graph_txt.split("-");
+name_list = document.getElementById("name_list").textContent;
+console.log(name_list);
 
-    arr.forEach(function (item, index) {
-        var row = arr[index];
-        if (row.length != 0) {
-            row = row.split(":");
-            letter = row[0];
-            matrix = row[1].split(",");
+if ((name_list != "[]") && (name_list != "")){
+    document.getElementById("scores").style.display = "block";
 
-            fillTable(index + 1, letter, matrix, "table");
+    name_list = name_list.replace("[", "");
+    name_list = name_list.replace("]", "");
+    name_list = name_list.replaceAll("'", "");
+    name_list = name_list.replaceAll(" ", "");
+    name_list = name_list.split(",");
 
-            auth_scores = document.getElementById("auth_list").textContent;
-            hub_scores = document.getElementById("hub_list").textContent;
+    // ex. name_list =  [ "A", "B" ]
 
-            auth_scores = auth_scores.replace("[", "");
-            auth_scores = auth_scores.replace("]", "");
-            auth_scores = auth_scores.split(",");
+    auth_scores = document.getElementById("auth_list").textContent;
+    hub_scores = document.getElementById("hub_list").textContent;
 
-            hub_scores = hub_scores.replace("[", "");
-            hub_scores = hub_scores.replace("]", "");
-            hub_scores = hub_scores.split(",");
+    auth_scores = auth_scores.replace("[", "");
+    auth_scores = auth_scores.replace("]", "");
+    auth_scores = auth_scores.split(",");
 
-            // matrix = [0.2, 0.2, 0.2, 0.2, 0.2]
-            fillScoreTable(index, letter, auth_scores[index], "auth_table");
-            fillScoreTable(index, letter, hub_scores[index], "hub_table");
-        }
+    hub_scores = hub_scores.replace("[", "");
+    hub_scores = hub_scores.replace("]", "");
+    hub_scores = hub_scores.split(",");
+
+    name_list.forEach(function (item, index) {
+        fillScoreTable(index, item, auth_scores[index], "auth_table");
+        fillScoreTable(index, item, hub_scores[index], "hub_table");
     })
+} else {
+    document.getElementById("scores").style.display = "none";
 }

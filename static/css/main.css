@@ -1,5 +1,13 @@
-﻿body {
-    padding-left: 50px;
+﻿.col {
+    text-decoration: none;
+    color: black;
+    border: dotted;
+    padding: 10px;
+    padding-inline: 100px;
+}
+
+body {
+    padding-inline: 50px;
     padding: 10px;
 }
 
@@ -7,6 +15,8 @@ h1 {
     padding: 10px;
     border-top: 1px solid;
     border-bottom: 1px solid;
+    margin: 0;
+    margin-bottom: 28px;
 }
 
 table, th, td {
@@ -36,4 +46,8 @@ buttonGray {
     padding-bottom: 10px;
     padding-inline: 50px;
     cursor: pointer;
+}
+
+ul {
+    font-size: 20px;
 }

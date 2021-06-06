@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <link rel="stylesheet" href="../static/css/app.css">
+    <title>Web Mining Final Project</title>
+</head>
+
+<body>
+    <h1>HITS Algorithm for Directed Graphs</h1>
+    <div class="row">
+        <a class="col" href="{{ url_for('matrix')}}">Matrix</a>
+        <a class="col" style="background-color: green; color: white" href="{{ url_for('graph')}}">Graph</a>
+    </div>
+    <br />
+
+    <a id="graph_text" style="display: none">{{mat}}</a>
+
+    <section>
+        <div style="display: none">
+            AUTH SCORES: <a id="auth_list">{{auth_list}}</a>
+            HUB SCORES: <a id="hub_list">{{hub_list}}</a>
+            NAME LIST: <a id="name_list">{{name_list}}</a>
+        </div>
+
+        <ul>
+            <li>To create a node, <b>tap</b> between two dotted lines.</li>
+            <li>To create a connection between nodes, <b>hold down</b> the source node and<br/><b>drag and drop</b> directed connection line to the destination node.</li>
+            <li>To delete a node or the link between them, click on it and delete it with the <b>DEL</b> key.</li>
+            <li>"<b>Create Graph</b>" button calculate and show the scores.</li>
+        </ul>
+
+        <div id="scores" style="display: none">
+            <b>AUTH SCORES</b>
+            <table id="auth_table">
+            </table>
+            <br />
+            <b>HUB SCORES</b>
+            <table id="hub_table">
+            </table>
+        </div>
+
+        <form action="{{ url_for('create_graph_anim')}}" method="post">
+            <input id='graphanim' type="text" name="graph" placeholder="graph1" required="required" style="display:none" />
+            <br />
+            <br />
+            <button type="submit" class="button" style="font-size:large; padding:10px;" onclick="parseLinks()">
+                Create Graph
+            </button>
+        </form>
+
+    </section>
+
+    <script src="../static/javascript/main.js"></script>
+
+    <br>
+    <div style="border-bottom: dashed; width:50%"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="../static/javascript/app.js"></script>
+
+    <div style="border-bottom: dashed; width: 50%"></div>
+    
+</body>
+
+</html>

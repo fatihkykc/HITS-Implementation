@@ -3,8 +3,9 @@
     "",
     "\\static",
     "\\static\\css",
-    "\\static\\javascript"
+    "\\static\\javascript",
+    "\\templates"
   ],
-  "SelectedNode": "\\HITS.py",
+  "SelectedNode": "\\static\\javascript\\main.js",
   "PreviewInSolutionExplorer": false
 }
