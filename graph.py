@@ -1,7 +1,5 @@
 import re, json
 
-import numpy as np
-
 
 class Node:
     def __init__(self, name):
@@ -45,10 +43,6 @@ class Graph:
         else:
             return [node for node in self.nodes if node.name == name][0]
 
-    def display(self):
-        for node in self.nodes:
-            print(f'{node.name} directs to {[directed.name for directed in node.directing_to]}')
-
     def get_auth_hub_list(self):
         auth_list = [node.auth for node in self.nodes]
         hub_list = [node.hub for node in self.nodes]
@@ -61,46 +55,26 @@ class Graph:
         hubs = sum([node.hub for node in self.nodes])
 
         for node in self.nodes:
-            node.auth /= auths
-            node.hub /= hubs
+            node.auth = node.auth / auths
+            node.hub = node.hub / hubs
 
 
-def init_graph(fname):
-    with open(fname) as f:
-        lines = f.readlines()
-
-    graph = Graph()
-
-    for line in lines:
-        [parent, child] = line.strip().split(',')
-        graph.add_relation(parent, child)
-    # graph.sort_nodes()
-
-    return graph
-
-
-def init_graph2(graphstr):
+def read_graph_from_matrix(graphstr):
     graph = Graph()
     lines = re.split('-', graphstr)[:-1]
-    print(lines)
     parent_list = [line[0] for line in lines]
     for i in range(len(lines)):
         for j in range(len(lines[i][3:].strip().split(','))):
             if int(lines[i][3:].strip().split(',')[j]) == 1:
                 graph.add_relation(parent_list[i], parent_list[j])
-    graph.display()
     return graph
 
 
-def init_graph3(graphstr):
+def read_graph_from_animgraph(graphstr):
     graph = Graph()
     dct = json.loads(graphstr)
     for source in dct:
         for target in dct[source]:
             if dct[source][target] == 1:
-                print(source, target)
                 graph.add_relation(source, target)
-    graph.display()
     return graph
-# graph = init_graph('g1.txt')
-# graph.display()

@@ -1,4 +1,4 @@
-from graph import init_graph2, init_graph3
+from graph import read_graph_from_matrix, read_graph_from_animgraph
 
 
 class HITS:
@@ -6,11 +6,11 @@ class HITS:
         self.string = fname
 
     def parse_str(self):
-        self.graph = init_graph2(self.string)
+        self.graph = read_graph_from_matrix(self.string)
         self.node_list = self.graph.nodes
 
     def parse_json(self):
-        self.graph = init_graph3(self.string)
+        self.graph = read_graph_from_animgraph(self.string)
         self.node_list = self.graph.nodes
 
     def run(self, n_iter):
@@ -19,7 +19,3 @@ class HITS:
             [node.update_hub() for node in self.node_list]
             self.graph.normalize()
         return self.graph.get_auth_hub_list()
-
-# auth_list, hub_list = HITS('g1.txt').run(n_iter=100)
-# print(auth_list)
-# print(hub_list)
