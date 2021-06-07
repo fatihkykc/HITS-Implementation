@@ -57,6 +57,8 @@ class Graph:
         for node in self.nodes:
             node.auth = node.auth / auths
             node.hub = node.hub / hubs
+            # node.auth /= auths
+            # node.hub /= hubs
 
 
 def read_graph_from_matrix(graphstr):

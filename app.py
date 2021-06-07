@@ -48,7 +48,7 @@ def create_graph_anim():
         mat = str(params[0])
         hits = HITS(mat)
         hits.parse_json()
-        auth_list, hub_list, name_list = hits.run(n_iter=1)
+        auth_list, hub_list, name_list = hits.run(n_iter=100)
         print("auth_list: ", auth_list)
         print("hub_list: ", hub_list)
         print("name_list: ", name_list)
