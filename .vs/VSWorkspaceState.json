@@ -3,9 +3,10 @@
     "",
     "\\static",
     "\\static\\css",
+    "\\static\\images",
     "\\static\\javascript",
     "\\templates"
   ],
-  "SelectedNode": "\\static\\javascript\\main.js",
+  "SelectedNode": "\\static\\javascript\\main2.js",
   "PreviewInSolutionExplorer": false
 }
