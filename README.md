@@ -3,6 +3,6 @@
 * Web server uses flask
 * 2 different screens are available
   + A graph animation representation
-  - <p align="center"> <img width="460" height="300" src="https://raw.githubusercontent.com/fatihkykc/WebMiningHIST/master/img-gif-files/graph-anim.gif> </p> 
+  - <p align="center"> <img width="460" height="300" src="https://raw.githubusercontent.com/fatihkykc/WebMiningHIST/master/img-gif-files/graph-anim.gif"> </p> 
   + A matrix representation
   - <p align="center"> <img width="460" height="300" src="https://raw.githubusercontent.com/fatihkykc/WebMiningHIST/master/img-gif-files/matrix.png"> </p> 
