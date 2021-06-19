@@ -7,7 +7,6 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
 @app.route('/')
 def home():
     return render_template('main.html')
